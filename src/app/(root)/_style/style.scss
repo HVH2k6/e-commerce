@@ -1,0 +1,15 @@
+body{
+}
+.main-content{
+    padding-top: 20px;
+    &-home{
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 12px;
+    }
+    &-layout{
+        display: grid;
+        grid-template-columns: 230px minmax(0px, 1fr);
+        gap: 32px;
+    }
+}

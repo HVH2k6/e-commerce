@@ -1,0 +1,15 @@
+.admin {
+    &-content{
+        display: flex;
+  }
+    &-flex-left{
+        min-width: 250px;
+        margin-top: 24px;
+  }
+    &-flex-right{
+        flex: 1;
+  }
+  }
+  .link-admin-sidebar.active {
+    color:  rgba(59, 130, 246) !important;
+  }
