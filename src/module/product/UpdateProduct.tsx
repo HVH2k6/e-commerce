@@ -1,13 +1,10 @@
 "use client";
-import { useState } from "react";
-import { Button, message, Modal, Form, Input } from "antd";
-import axios from "axios";
-
-import type { FormProps } from "antd";
-import { API } from "@/utils/constant";
+import { HandleDeleteProduct } from "@/action/HandleDeleteProduct";
+import { HandleUpdateProduct } from "@/action/HandleUpdateProduct";
 import UploadImage from "@/components/file/UploadImage";
-import { HandleCreateProduct } from "@/action/HandleCreateProduct";
-
+import { API } from "@/utils/constant";
+import { Button, Form, FormProps, Input, Modal, message } from "antd";
+import { useState } from "react";
 
 type FieldType = {
     name: string;
@@ -16,12 +13,25 @@ type FieldType = {
     image: string;
 };
 
-const CreateProduct = () => {
+const UpdateProduct = ({ id }: { id: number }) => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
 
+    const handleFetchDataUpdate = async () => {
+        try {
+            const response = await fetch(`${API.Product}/update/${id}`, {
+                method: "GET",
+            });
+
+            const data = await response.json();
+            form.setFieldsValue(data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    handleFetchDataUpdate();
     const showModal = () => {
         setOpen(true);
     };
@@ -31,49 +41,49 @@ const CreateProduct = () => {
     };
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-        setLoading(true);
-        setConfirmLoading(true);
+        // setLoading(true);
+        // setConfirmLoading(true);
 
-        try {
-           const response = await HandleCreateProduct(values);
-            console.log( response)
-            message.success("Tạo sản phẩm thành công");
-            setOpen(false);
-            form.resetFields();
-        } catch (error) {
-            console.error("Error creating sản phẩm:", error);
-            message.error("Đã xảy ra lỗi khi tạo sản phẩm");
-        } finally {
-            setLoading(false);
-            setConfirmLoading(false);
-        }
+        console.log(values);
+        // try {
+        //     // const response = await HandleUpdateProduct(id, values);
+        //     // console.log(response);
+        //     message.success("Tạo sản phẩm thành công");
+        //     setOpen(false);
+        //     form.resetFields();
+        // } catch (error) {
+        //     console.error("Error creating sản phẩm:", error);
+        //     message.error("Đã xảy ra lỗi khi tạo sản phẩm");
+        // } finally {
+        //     setLoading(false);
+        //     setConfirmLoading(false);
+        // }
     };
 
     const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
-    
+
     const handleCancel = () => {
         setOpen(false);
-        form.resetFields();
     };
-
     return (
         <>
             <Button type="primary" onClick={showModal}>
-                Tạo sản phẩm
+                Sửa sản phẩm
             </Button>
             <Modal
                 open={open}
                 confirmLoading={confirmLoading}
+                onOk={handleOk}
                 onCancel={handleCancel}
                 width={950}
                 footer={[
                     <Button key="back" onClick={handleCancel}>
-                        Return
+                        Hủy
                     </Button>,
                     <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-                        Submit
+                        Update
                     </Button>,
                 ]}
             >
@@ -112,7 +122,7 @@ const CreateProduct = () => {
                     <Form.Item<FieldType>
                         label="Hình ảnh"
                         name="image"
-                        rules={[{ required: true, message: "Please input your image product!" }]}
+                        
                     >
                         <UploadImage onUploadSuccess={(url) => form.setFieldsValue({ image: url })} />
                     </Form.Item>
@@ -122,4 +132,4 @@ const CreateProduct = () => {
     );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

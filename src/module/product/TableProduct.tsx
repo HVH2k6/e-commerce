@@ -3,6 +3,7 @@ import IProduct from "@/types/product";
 import { Button, Space, Table } from "antd";
 import { ColumnType } from "antd/es/table";
 import DeleteProduct from "./DeleteProduct";
+import UpdateProduct from "./UpdateProduct";
 interface IProps {
     data: IProduct[] | [];
 }
@@ -30,6 +31,7 @@ export default function TableProduct(props: IProps) {
             title:"Hành động",
             render: (_, record) => (
                 <Space size='middle' key={record.id}>
+                    <UpdateProduct id={record.id}></UpdateProduct>
                    <DeleteProduct id={record.id}></DeleteProduct>
                 </Space>
               ),
