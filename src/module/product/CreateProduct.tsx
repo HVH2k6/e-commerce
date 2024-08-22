@@ -6,6 +6,8 @@ import axios from "axios";
 import type { FormProps } from "antd";
 import { API } from "@/utils/constant";
 import UploadImage from "@/components/file/UploadImage";
+import { HandleCreateProduct } from "@/action/HandleCreateProduct";
+
 
 type FieldType = {
     name: string;
@@ -33,11 +35,8 @@ const CreateProduct = () => {
         setConfirmLoading(true);
 
         try {
-            const response = await axios.post(`${API.Product}/create`, values, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+           const response = await HandleCreateProduct(values);
+            console.log( response)
             message.success("Tạo sản phẩm thành công");
             setOpen(false);
             form.resetFields();

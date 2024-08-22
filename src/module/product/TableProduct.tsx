@@ -1,45 +1,46 @@
 "use client";
-import { Table } from "antd";
-
-export default function TableProduct() {
-    const dataSource = [
+import IProduct from "@/types/product";
+import { Button, Space, Table } from "antd";
+import { ColumnType } from "antd/es/table";
+import DeleteProduct from "./DeleteProduct";
+interface IProps {
+    data: IProduct[] | [];
+}
+export default function TableProduct(props: IProps) {
+    const { data } = props;
+    const columns: ColumnType<IProduct>[] = [
         {
-            key: "1",
-            name: "Mike",
-            age: 32,
-            address: "10 Downing Street",
+            title: "Id",
+            dataIndex: "id",
         },
         {
-            key: "2",
-            name: "John",
-            age: 42,
-            address: "10 Downing Street",
+            title: "Hình ảnh",
+            dataIndex: "image",
+            render: (image) => <img src={image} alt="image" width={50} height={50} style={{ objectFit: "cover" }}/>,
         },
-    ];
-
-    const columns = [
         {
-            title: "Name",
+            title: "Tên sản phẩm",
             dataIndex: "name",
-            key: "name",
         },
         {
-            title: "Age",
-            dataIndex: "age",
-            key: "age",
+            title: "Giá",
+            dataIndex: "price",
         },
         {
-            title: "Address",
-            dataIndex: "address",
-            key: "address",
-        },
+            title:"Hành động",
+            render: (_, record) => (
+                <Space size='middle' key={record.id}>
+                   <DeleteProduct id={record.id}></DeleteProduct>
+                </Space>
+              ),
+        }
     ];
     return (
         <div>
             <h1>Danh sách sản phẩm</h1>
             <div className="">
-                <Table dataSource={dataSource} columns={columns} />
+                <Table rowKey={'id'} dataSource={data} columns={columns} />
             </div>
         </div>
-    )
+    );
 }
