@@ -4,7 +4,7 @@ import { HandleUpdateProduct } from "@/action/HandleUpdateProduct";
 import UploadImage from "@/components/file/UploadImage";
 import { API } from "@/utils/constant";
 import { Button, Form, FormProps, Input, Modal, message } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FieldType = {
     name: string;
@@ -18,20 +18,21 @@ const UpdateProduct = ({ id }: { id: number }) => {
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
+    useEffect(() => {
+        const handleFetchDataUpdate = async () => {
+            try {
+                const response = await fetch(`${API.Product}/update/${id}`, {
+                    method: "GET",
+                });
 
-    const handleFetchDataUpdate = async () => {
-        try {
-            const response = await fetch(`${API.Product}/update/${id}`, {
-                method: "GET",
-            });
-
-            const data = await response.json();
-            form.setFieldsValue(data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-    handleFetchDataUpdate();
+                const data = await response.json();
+                form.setFieldsValue(data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        handleFetchDataUpdate();
+    }, [id]);
     const showModal = () => {
         setOpen(true);
     };
@@ -41,23 +42,21 @@ const UpdateProduct = ({ id }: { id: number }) => {
     };
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-        // setLoading(true);
-        // setConfirmLoading(true);
+        setLoading(true);
+        setConfirmLoading(true);
 
-        console.log(values);
-        // try {
-        //     // const response = await HandleUpdateProduct(id, values);
-        //     // console.log(response);
-        //     message.success("Tạo sản phẩm thành công");
-        //     setOpen(false);
-        //     form.resetFields();
-        // } catch (error) {
-        //     console.error("Error creating sản phẩm:", error);
-        //     message.error("Đã xảy ra lỗi khi tạo sản phẩm");
-        // } finally {
-        //     setLoading(false);
-        //     setConfirmLoading(false);
-        // }
+        try {
+            const response = await HandleUpdateProduct(id, values);
+
+            message.success("Sửa sản phẩm thành công");
+            setOpen(false);
+        } catch (error) {
+            console.error("Error creating sản phẩm:", error);
+            message.error("Đã xảy ra lỗi khi tạo sản phẩm");
+        } finally {
+            setLoading(false);
+            setConfirmLoading(false);
+        }
     };
 
     const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
@@ -119,12 +118,11 @@ const UpdateProduct = ({ id }: { id: number }) => {
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item<FieldType>
-                        label="Hình ảnh"
-                        name="image"
-                        
-                    >
-                        <UploadImage onUploadSuccess={(url) => form.setFieldsValue({ image: url })} />
+                    <Form.Item<FieldType> label="Hình ảnh" name="image">
+                        <UploadImage
+                            initialImageUrl={form.getFieldValue("image")}
+                            onUploadSuccess={(url) => form.setFieldsValue({ image: url })}
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

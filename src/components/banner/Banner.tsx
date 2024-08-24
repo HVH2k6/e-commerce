@@ -1,14 +1,15 @@
 "use client";
+import "swiper/scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
-import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
-import "./banner.scss"
+import "./banner.scss";
 export default function Banner() {
     return (
-        <Swiper
+      <div className="banner">
+          <Swiper
             slidesPerView={2}
             spaceBetween={30}
             loop={true}
@@ -20,7 +21,7 @@ export default function Banner() {
             autoplay={{ delay: 5000 }}
         >
             <SwiperSlide>
-                <div className="banner">
+                <div className="banner-item">
                     <img
                         src="https://salt.tikicdn.com/cache/w750/ts/tikimsp/f6/91/90/a31b6764924077a3f37cda83c29769d0.jpg.webp"
                         alt=""
@@ -29,15 +30,15 @@ export default function Banner() {
                 </div>
             </SwiperSlide>
             <SwiperSlide>
-                <div className="banner">
+                <div className="banner-item">
                     <img
                         src="https://salt.tikicdn.com/cache/w750/ts/tikimsp/f6/91/90/a31b6764924077a3f37cda83c29769d0.jpg.webp"
                         alt=""
                         className="banner-img"
-
                     />
                 </div>
             </SwiperSlide>
         </Swiper>
+      </div>
     );
 }

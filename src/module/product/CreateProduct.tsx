@@ -14,6 +14,8 @@ type FieldType = {
     price: string;
     description: string;
     image: string;
+    sale: string;
+    group?:string[]
 };
 
 const CreateProduct = () => {
@@ -109,6 +111,23 @@ const CreateProduct = () => {
                     >
                         <Input />
                     </Form.Item>
+                    <Form.Item<FieldType>
+                        label="Giảm giá sản phẩm"
+                        name="sale"
+                        rules={[{ required: true, message: "Please input your sale product!" ,min:0,max:100}]}
+                        
+                    >
+                        <Input min={0} max={100}/>
+                    </Form.Item>
+                    <Form.Item<FieldType>
+                        label="Chọn nhóm sản phẩm"
+                        name="sale"
+                        rules={[{ required: true, message: "Please input your sale product!" ,min:0,max:100}]}
+                        
+                    >
+                        <Input min={0} max={100}/>
+                    </Form.Item>
+                    
                     <Form.Item<FieldType>
                         label="Hình ảnh"
                         name="image"
