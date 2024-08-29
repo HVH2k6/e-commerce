@@ -1,7 +1,8 @@
 'use client';
-import { HandleDeleteProduct } from '@/action/HandleDeleteProduct';
+
 import { HandleUpdateProduct } from '@/action/HandleUpdateProduct';
 import UploadImage from '@/components/file/UploadImage';
+
 import SelectedCategory from '@/components/selected/Selected';
 import { API } from '@/utils/constant';
 import { Button, Form, FormProps, Input, Modal, message } from 'antd';

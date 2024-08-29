@@ -1,5 +1,5 @@
+import Header from "@/components/layout/Header";
 
-import Header from '@/components/layout/Header';
 
 
 export default function MainLayout({
@@ -13,4 +13,7 @@ export default function MainLayout({
       <div className='flex-1 container pb-10'>{children}</div>
     </div>
   );
+
+
+
 }

@@ -1,3 +1,4 @@
+
 import CreateProduct from '@/module/product/CreateProduct';
 import TableProduct from '@/module/product/TableProduct';
 import { API } from '@/utils/constant';
@@ -16,4 +17,5 @@ export default async function Product() {
       <TableProduct data={data}></TableProduct>
     </div>
   );
+
 }

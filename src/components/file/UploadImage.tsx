@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState, useEffect } from 'react';
 import {
@@ -104,7 +105,7 @@ const UploadImage: React.FC<UploadImageProps> = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default UploadImage;
+export default UploadImage

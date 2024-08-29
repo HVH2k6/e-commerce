@@ -1,7 +1,7 @@
 import Banner from "@/components/banner/Banner";
+
 import FlashSaleProductList from "@/components/product/FlashSaleProductList";
 import NewProductList from "@/components/product/NewProductList";
-
 
 export default function HomePage() {
     return (
@@ -14,5 +14,5 @@ export default function HomePage() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

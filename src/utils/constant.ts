@@ -4,6 +4,7 @@ export const MenuHeader = [
     {
         name: "Trang chủ", 
         path: "/",
+
         
     },
     {
@@ -19,6 +20,8 @@ export const MenuHeader = [
         name:"Giới thiệu",
         path: "/about",
     }
+
+ 
    
 ] 
 const LOCAL_API = "http://localhost:5000/api";
@@ -26,5 +29,8 @@ const LOCAL_API = "http://localhost:5000/api";
 export const API = {
     Product: LOCAL_API + "/product",
     CLOUD: LOCAL_API + "/cloud",
+
     CATEGORY: LOCAL_API + "/category"
+
+ 
 }

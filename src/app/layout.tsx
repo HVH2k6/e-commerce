@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+
 import "@/app/globals.css";
+
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 const roboto = Roboto({
