@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AppstoreOutlined, FolderOutlined, GroupOutlined} from "@ant-design/icons";
+import { AppstoreOutlined, FolderOutlined, GroupOutlined, HomeOutlined} from "@ant-design/icons";
 
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -13,6 +13,11 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const SidebarAdmin = () => {
     const items: MenuItem[] = [
+        {
+            key: "sub0",
+            icon: <HomeOutlined />,
+            label: <LinkAdminSidebar name="Trang chủ" url="/" />,
+        },
         {
             key: "sub1",
             icon: <AppstoreOutlined />,

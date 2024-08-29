@@ -30,7 +30,8 @@ export const API = {
     Product: LOCAL_API + "/product",
     CLOUD: LOCAL_API + "/cloud",
 
-    CATEGORY: LOCAL_API + "/category"
+    CATEGORY: LOCAL_API + "/category",
+    AUTH: LOCAL_API + "/auth",
 
  
 }
