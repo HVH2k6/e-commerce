@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import "@/app/globals.css";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { AuthProvider } from "@/context/AuthContext";
 
 const roboto = Roboto({
     weight: "400",
@@ -23,7 +24,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={roboto.className}>
-                <AntdRegistry>{children}</AntdRegistry>
+                <AuthProvider>
+                    <AntdRegistry>{children}</AntdRegistry>
+                </AuthProvider>
             </body>
         </html>
     );

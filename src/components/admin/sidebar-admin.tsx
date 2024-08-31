@@ -1,6 +1,13 @@
 import React from "react";
 
-import { AppstoreOutlined, FolderOutlined, GroupOutlined, HomeOutlined} from "@ant-design/icons";
+import {
+    AppstoreOutlined,
+    ClusterOutlined,
+    FolderOutlined,
+    GroupOutlined,
+    HomeOutlined,
+    IdcardOutlined,
+} from "@ant-design/icons";
 
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -29,15 +36,24 @@ const SidebarAdmin = () => {
             label: <LinkAdminSidebar name="Sản phẩm" url="/admin/product" />,
         },
         {
+            key: "sub2.1",
+            icon: <SaleIcon />,
+            label: <LinkAdminSidebar name="Thêm danh sách giảm giá" url="/admin/sale-product" />,
+        },
+        {
             key: "sub3",
             label: <LinkAdminSidebar name="Danh mục" url="/admin/category" />,
             icon: <GroupOutlined />,
         },
-
         {
             key: "sub4",
-            icon: <SaleIcon />,
-            label: <LinkAdminSidebar name="Thêm danh sách giảm giá" url="/admin/sale-product" />,
+            label: <LinkAdminSidebar name="Nhóm quyềm" url="/admin/role" />,
+            icon: <IdcardOutlined />,
+        },
+        {
+            key: "sub5",
+            label: <LinkAdminSidebar name="Phân quyền" url="/admin/permission" />,
+            icon: <ClusterOutlined />,
         },
     ];
 

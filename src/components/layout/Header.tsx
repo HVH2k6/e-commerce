@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import DropdownCategory from "../dropdown/DropdownCategory";
 import { MenuHeader } from "@/utils/constant";
+import CheckAuthHeader from "@/module/auth/CheckAuthHeader";
 const Header = () => {
     return (
         <header className="container flex items-center justify-between pt-5 pb-10">
@@ -20,16 +21,7 @@ const Header = () => {
                     ))}
                 </ul>
             </div>
-            <div className="flex items-center gap-x-6">
-                <button>
-                    <Link href={"/auth/login"}>Đăng nhập</Link>
-                </button>
-                <button className="px-3 py-2 bg-blue-500 rounded-lg ">
-                    <Link href={"/auth/register"} className="text-white ">
-                        Đăng ký
-                    </Link>
-                </button>
-            </div>
+          <CheckAuthHeader/>
         </header>
     );
 };
