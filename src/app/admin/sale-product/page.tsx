@@ -14,6 +14,7 @@ export default async function page() {
 
   return (
     <>
+      <CreateSaleProduct />
       <TableSale data={data}></TableSale>
     </>
   );

@@ -1,32 +1,40 @@
 'use client';
-import React, { useState } from 'react';
-import type { FormProps } from 'antd';
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Form,
-  Input,
-  Modal,
-  message,
-} from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, DatePicker, Form, Input, Modal, message } from 'antd';
 import dayjs from 'dayjs';
 import SelectedProduct from '@/components/selected/SelectedProduct';
 import axios from 'axios';
 import { API } from '@/utils/constant';
 import { HandleCreateSale } from '@/action/HandleCreateSale';
+import { HandleUpdateSale } from '@/action/HandleUpdateSale';
 
 type FieldType = {
   title: string;
   time_start: Date;
   time_end: Date;
-  list_product: [];
+  list_product: string[]; // Adjust type to string array
 };
-const CreateSaleProduct: React.FC = () => {
+
+const UpdateSaleProduct = ({ id }: { id: number }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get(`${API.SALE}/get-data-update/${id}`);
+      const data = {
+        ...response.data,
+        time_start: dayjs(response.data.timeStart),
+        time_end: dayjs(response.data.timeEnd),
+      };
+
+      form.setFieldsValue(data); // Populate the form with fetched data
+      if (!response.data) return;
+    }
+    fetchData();
+  }, [id, form]);
 
   const showModal = () => {
     setOpen(true);
@@ -36,39 +44,32 @@ const CreateSaleProduct: React.FC = () => {
     form.submit();
   };
 
-  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+  const onFinish = async (values: FieldType) => {
     setLoading(true);
     setConfirmLoading(true);
     try {
-      await HandleCreateSale(values);
+      await HandleUpdateSale(id, values);
 
-      message.success('Tạo sale thành công');
+      message.success('Sale updated successfully');
       setOpen(false);
       form.resetFields();
     } catch (error) {
-      message.error('Đã xảy ra lỗi khi tạo sale');
+      message.error('Error occurred while updating sale');
     } finally {
       setLoading(false);
       setConfirmLoading(false);
     }
   };
 
-  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
-    errorInfo
-  ) => {
-    console.log('Failed:', errorInfo);
-  };
-
   const handleCancel = () => {
     setOpen(false);
     form.resetFields();
   };
-  const defaultValue = dayjs('2024-01-01');
 
   return (
     <>
       <Button type='primary' onClick={showModal}>
-        Tạo danh sách sale
+        Sửa
       </Button>
       <Modal
         open={open}
@@ -90,14 +91,13 @@ const CreateSaleProduct: React.FC = () => {
         ]}
       >
         <Form
-          form={form} // Link the form instance
+          form={form}
           name='basic'
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete='off'
         >
           <Form.Item<FieldType>
@@ -109,10 +109,10 @@ const CreateSaleProduct: React.FC = () => {
           </Form.Item>
 
           <Form.Item<FieldType> label='Thời gian bắt đầu' name='time_start'>
-            <DatePicker defaultValue={defaultValue} showTime />
+            <DatePicker showTime />
           </Form.Item>
           <Form.Item<FieldType> label='Thời gian kết thúc' name='time_end'>
-            <DatePicker defaultValue={defaultValue} showTime />
+            <DatePicker showTime />
           </Form.Item>
 
           <Form.Item<FieldType>
@@ -120,23 +120,19 @@ const CreateSaleProduct: React.FC = () => {
             name='list_product'
             rules={[
               {
+                type: 'array',
                 required: true,
-                message: 'Please select at least one product!',
+                min: 1,
+                message: 'Please select at least one product',
               },
             ]}
           >
             <SelectedProduct
-              onSelectProduct={(list_product) =>
-                form.setFieldsValue({ list_product })
+              onSelectProduct={
+                (list_product) => form.setFieldsValue({ list_product }) // Update form value
               }
-              // selectedValue={form.getFieldValue("list_product")}
+              selectedValue={form.getFieldValue('listProductSale')} // Set selected value
             />
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type='primary' htmlType='submit'>
-              Submit
-            </Button>
           </Form.Item>
         </Form>
       </Modal>
@@ -144,4 +140,4 @@ const CreateSaleProduct: React.FC = () => {
   );
 };
 
-export default CreateSaleProduct;
+export default UpdateSaleProduct;

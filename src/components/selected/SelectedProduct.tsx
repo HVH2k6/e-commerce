@@ -1,46 +1,97 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Radio, Select, Space } from "antd";
-import type { ConfigProviderProps, RadioChangeEvent, SelectProps } from "antd";
-import { API } from "@/utils/constant";
-import { DefaultOptionType } from "antd/es/select";
-import axios from "axios";
-import IProduct from "@/types/product";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Select } from 'antd';
+import axios from 'axios';
+import { API } from '@/utils/constant';
+import type { DefaultOptionType } from 'antd/es/select';
+import IProduct from '@/types/product';
 
-type SizeType = ConfigProviderProps["componentSize"];
-interface SelectedProps {
-  onSelectProduct: (value: string | string[] | null) => void;
-  selectedValue?: string | string[] | null | undefined;
+interface IProductSelect {
+  id: number;
+  name: string;
 }
 
-const SelectedProduct: React.FC<SelectedProps> = ({ onSelectProduct, selectedValue }) => {
-    const handleChange = (value: string | string[]) => {
-        onSelectProduct(value);
-    };
+interface SelectedProps {
+  onSelectProduct: (value: number[]) => void; // Sử dụng number[] cho ID
+  selectedValue?: IProductSelect[] | undefined | null;
+}
 
-    const [options, setOptions] = useState<DefaultOptionType[]>([]);
+const SelectedProduct: React.FC<SelectedProps> = ({
+  onSelectProduct,
+  selectedValue,
+}) => {
+  const [options, setOptions] = useState<DefaultOptionType[]>([]);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]); // Để theo dõi các ID đã chọn
 
-    useEffect(() => {
-        async function getProducts() {
-            const response = await axios.get(`${API.Product}/getAll`);
-            const data = await response.data;
+  useEffect(() => {
+    async function getProducts() {
+      try {
+        const response = await axios.get(`${API.Product}/getAll`);
+        const data = response.data;
 
-            setOptions(data.map((product: IProduct) => ({ label: product.name, value: product.id })));
-        }
+        setOptions(
+          data.map((product: IProduct) => ({
+            label: product.name,
+            value: product.id,
+          }))
+        );
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    }
 
-        getProducts();
-    }, []);
+    getProducts();
+  }, []);
 
-    return (
-        <Select
-            mode="tags"
-            placeholder="Please select"
-            onChange={handleChange}
-            style={{ width: "100%" }}
-            options={options}
-            value={selectedValue} // Ensure that the Select component shows the correct pre-selected value
-        />
-    );
+  useEffect(() => {
+    if (selectedValue) {
+      setSelectedIds(selectedValue.map((item) => item.id));
+    }
+  }, [selectedValue]);
+
+  const handleChange = (value: number[]) => {
+    setSelectedIds(value);
+    onSelectProduct(value); // Cập nhật danh sách giá trị đã chọn lên parent
+  };
+
+  return (
+    <Select
+      mode='multiple'
+      placeholder='Please select products'
+      onChange={handleChange}
+      style={{ width: '100%' }}
+      options={options}
+      value={selectedIds}
+      tagRender={({ label, value, closable, onClose }) => {
+        // Cung cấp custom rendering cho các tag
+        const name =
+          options.find((option) => option.value === value)?.label || '';
+        return (
+          <span
+            style={{
+              display: 'inline-block',
+              padding: '2px 4px',
+              marginRight: '4px',
+              border: '1px solid #d9d9d9',
+              borderRadius: '2px',
+              backgroundColor: '#f0f0f0',
+            }}
+          >
+            {name}
+            {closable && (
+              <a
+                onClick={onClose}
+                style={{ marginLeft: '4px', color: 'red', fontSize: '12px' }}
+              >
+                X
+              </a>
+            )}{' '}
+            {/* Xóa mục */}
+          </span>
+        );
+      }}
+    />
+  );
 };
 
 export default SelectedProduct;
