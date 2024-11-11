@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 
-import "@/app/globals.css";
+import "@/app/globals.scss";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { AuthProvider } from "@/context/AuthContext";

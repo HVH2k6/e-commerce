@@ -23,14 +23,15 @@ const items: MenuProps['items'] = [
 ];
 
 const DropdownCategory: React.FC = () => (
-  <Dropdown menu={{ items }} trigger={['click']}>
-    <div onClick={(e) => e.preventDefault()} className='px-3 py-2 rounded-md bg-slate-200/85 font-medium'>
-      <Space>
-        Danh mục
-        <DownOutlined />
-      </Space>
-    </div>
-  </Dropdown>
+  // <Dropdown menu={{ items }} trigger={['click']}>
+  //   <div onClick={(e) => e.preventDefault()} className='px-3 py-2 rounded-md bg-slate-200/85 font-medium'>
+  //     <Space>
+  //       Danh mục
+  //       <DownOutlined />
+  //     </Space>
+  //   </div>
+  // </Dropdown>
+  <></>
 );
 
 export default DropdownCategory;

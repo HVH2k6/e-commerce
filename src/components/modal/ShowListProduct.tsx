@@ -59,7 +59,7 @@ const ShowListProduct = (props: IProps) => {
               </tr>
             </thead>
             <tbody>
-              {data.length > 0 ? (
+              {data && data.length > 0 ? (
                 data.map((product) => (
                   <tr
                     className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'

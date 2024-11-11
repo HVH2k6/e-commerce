@@ -5,6 +5,7 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import axios from "axios";
 import { API } from "@/utils/constant";
 import Link from "next/link";
+import { HandleCreateAuth } from "@/action/HandleAuth";
 
 type FieldType = {
     fullname?: string;
@@ -15,7 +16,7 @@ type FieldType = {
 const RegisterForm: React.FC = () => {
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
         try {
-            const response = await axios.post(`${API.AUTH}/register`, values);
+            await HandleCreateAuth(values);
             message.success("Đăng ký thanh cong");
         } catch (error:any) {
             const messageError = error.response?.data.message;

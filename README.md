@@ -37,5 +37,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # thông tin trang web
 giao diện trang web:https://www.figma.com/design/6Z70u8WwUn2sizSf8sy08A/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)?node-id=310-19540&node-type=FRAME&t=1v04BqC6qTs2Ryx2-0
 # thông tin về tác giả
-facebook: https://facebook.com/havanhung09092006
-github: https://github.com/HVH2K6
+---facebook: https://facebook.com/havanhung09092006
+---github: https://github.com/HVH2K6

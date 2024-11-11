@@ -1,70 +1,74 @@
-"use client";
-import React, { useState } from "react";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Flex, message, Upload } from "antd";
-import type { GetProp, UploadProps } from "antd";
-import { API } from "@/utils/constant";
+import React, { useState } from 'react';
+import {
+  AppstoreOutlined,
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Button, Menu } from 'antd';
 
-type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+type MenuItem = Required<MenuProps>['items'][number];
 
-const getBase64 = (img: FileType, callback: (url: string) => void) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result as string));
-    reader.readAsDataURL(img);
-};
-
-const beforeUpload = (file: FileType) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-        message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-};
+const items: MenuItem[] = [
+  { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
+  { key: '2', icon: <DesktopOutlined />, label: 'Option 2' },
+  { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
+  {
+    key: 'sub1',
+    label: 'Navigation One',
+    icon: <MailOutlined />,
+    children: [
+      { key: '5', label: 'Option 5' },
+      { key: '6', label: 'Option 6' },
+      { key: '7', label: 'Option 7' },
+      { key: '8', label: 'Option 8' },
+    ],
+  },
+  {
+    key: 'sub2',
+    label: 'Navigation Two',
+    icon: <AppstoreOutlined />,
+    children: [
+      { key: '9', label: 'Option 9' },
+      { key: '10', label: 'Option 10' },
+      {
+        key: 'sub3',
+        label: 'Submenu',
+        children: [
+          { key: '11', label: 'Option 11' },
+          { key: '12', label: 'Option 12' },
+        ],
+      },
+    ],
+  },
+];
 
 const App: React.FC = () => {
-    const [loading, setLoading] = useState(false);
-    const [imageUrl, setImageUrl] = useState<string>();
+  const [collapsed, setCollapsed] = useState(false);
 
-    const handleChange: UploadProps["onChange"] = (info) => {
-        if (info.file.status === "uploading") {
-            setLoading(true);
-            return;
-        }
-        if (info.file.status === "done") {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj as FileType, (url) => {
-                setLoading(false);
-                setImageUrl(url);
-            });
-        }
-    };
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
-    const uploadButton = (
-        <button style={{ border: 0, background: "none" }} type="button">
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </button>
-    );
-
-    return (
-        <Flex gap="middle" wrap>
-            <Upload
-                name="file"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action={`${API.CLOUD}/cloudinary`}
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-            >
-                {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: "100%" }} /> : uploadButton}
-            </Upload>
-        </Flex>
-    );
+  return (
+    <div style={{ width: 256 }}>
+      <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </Button>
+      <Menu
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode="inline"
+        theme="dark"
+        inlineCollapsed={collapsed}
+        items={items}
+      />
+    </div>
+  );
 };
 
 export default App;

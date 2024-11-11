@@ -9,7 +9,7 @@ interface UserInfo {
     email: string;
     fullname: string;
     id: number;
-    role: string;
+    name_role: string;
 }
 
 interface AuthContextType {
@@ -53,6 +53,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     const signOut = () => {
         Cookies.remove("access_token");
+        localStorage.removeItem("access_token");
         setUserInfo(null);
     };
 

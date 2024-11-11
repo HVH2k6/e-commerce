@@ -13,7 +13,7 @@ interface IProductSelect {
 
 interface SelectedProps {
   onSelectProduct: (value: number[]) => void; // Sử dụng number[] cho ID
-  selectedValue?: IProductSelect[] | undefined | null;
+  selectedValue?: IProductSelect[] | undefined;
 }
 
 const SelectedProduct: React.FC<SelectedProps> = ({

@@ -26,8 +26,8 @@ const UpdateSaleProduct = ({ id }: { id: number }) => {
       const response = await axios.get(`${API.SALE}/get-data-update/${id}`);
       const data = {
         ...response.data,
-        time_start: dayjs(response.data.timeStart),
-        time_end: dayjs(response.data.timeEnd),
+        time_start: dayjs(response.data.time_start),
+        time_end: dayjs(response.data.time_end),
       };
 
       form.setFieldsValue(data); // Populate the form with fetched data
@@ -52,7 +52,6 @@ const UpdateSaleProduct = ({ id }: { id: number }) => {
 
       message.success('Sale updated successfully');
       setOpen(false);
-      form.resetFields();
     } catch (error) {
       message.error('Error occurred while updating sale');
     } finally {
@@ -63,7 +62,6 @@ const UpdateSaleProduct = ({ id }: { id: number }) => {
 
   const handleCancel = () => {
     setOpen(false);
-    form.resetFields();
   };
 
   return (
@@ -131,7 +129,7 @@ const UpdateSaleProduct = ({ id }: { id: number }) => {
               onSelectProduct={
                 (list_product) => form.setFieldsValue({ list_product }) // Update form value
               }
-              selectedValue={form.getFieldValue('listProductSale')} // Set selected value
+              selectedValue={form.getFieldValue('listProductSale')}
             />
           </Form.Item>
         </Form>
