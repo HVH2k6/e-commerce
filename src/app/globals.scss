@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  /* @apply bg-gray-100; */
+  @apply bg-gray-100;
 }
 .container {
   @apply mx-auto;
@@ -41,11 +41,25 @@ body {
     display: none;
   }
 }
+// sidebar category
+.sidebar-category {
+  @apply flex flex-col gap-y-4 shadow-md py-3 px-4 rounded-lg bg-white;
+  &-item {
+    @apply px-2 py-1;
+  }
+}
+.box-content-home-page {
+  @apply p-4 rounded-lg bg-white;
+}
+.time-countdown {
+  @apply p-2 bg-red-500 rounded-lg font-medium text-white text-sm;
+}
+// responsive
 @media screen and (max-width: 768px) {
   .header {
     border: none;
     .main-header {
-      @apply px-5
+      @apply px-5;
     }
     &-nav-md {
       @apply flex flex-col items-start gap-y-2 w-60 px-5 pt-5 fixed top-0 bottom-0 right-0 z-50 bg-white shadow-md translate-x-full transition-transform duration-300 ease-in-out;

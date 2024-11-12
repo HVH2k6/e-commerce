@@ -1,9 +1,10 @@
 "use server";
 
-import { API } from "@/utils/constant";
+import { API } from "@/utils/constant"
 import { revalidateTag } from "next/cache";
 
 export const HandleUpdateSale = async (id: number, data: any) => {
+    console.log("HandleUpdateSale ~ data:", data)
     const response = await fetch(`${API.SALE}/update/${id}`, {
         method: "POST",
         headers: {

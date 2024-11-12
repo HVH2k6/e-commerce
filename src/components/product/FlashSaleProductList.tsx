@@ -1,31 +1,36 @@
 import { API } from '@/utils/constant';
 import ProductCard from './ProductCard';
 import TimeCountDown from '../time/TimeCountDown';
+import IProduct from '@/types/product';
+import ISale from '@/types/sale';
 
 const FlashSaleProductList = async () => {
   const response = await fetch(`${API.SALE}`, {
     method: 'GET',
-    next:{tags: ['sale']}
+    next: { tags: ['sale'] },
   });
   const data = await response.json();
+  // console.log('FlashSaleProductList ~ data:', data);
 
-  const timeNow = new Date();
+  const timeNow = new Date().getTime();
+
+ 
 
   return (
     <>
-      {data.map((product: any, index: number) => (
-        <>
-          {timeNow <= new Date(product.timeStart) ||
-          timeNow > new Date(product.timeEnd) ? null : (
-            <div key={index} className='mb-10 last:mb-0'>
+      {data.map((product: ISale, index: number) => (
+        <div className='box-content-home-page mt-5' key={index}>
+          {timeNow >= new Date(product.timeStart).getTime() &&
+          timeNow <= new Date(product.timeEnd).getTime() ? (
+            <div>
               <div className='flex items-center mb-8'>
                 <h2 className='text-3xl font-bold'>{product.titleSale}</h2>
-                <TimeCountDown
+                {/* <TimeCountDown
                   time_start={product.timeStart}
                   time_end={product.timeEnd}
-                ></TimeCountDown>
+                ></TimeCountDown> */}
                 <button className='ml-auto text-blue-500 font-medium'>
-                  Xem thêm
+                  Xem thêm
                 </button>
               </div>
               <div className='grid grid-cols-4 gap-x-5'>
@@ -35,8 +40,8 @@ const FlashSaleProductList = async () => {
                   ))}
               </div>
             </div>
-          )}
-        </>
+          ) : null}
+        </div>
       ))}
     </>
   );

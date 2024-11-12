@@ -10,7 +10,7 @@ const TimeCountDown: React.FC<IProps> = ({ time_start, time_end }) => {
   const timeNow = new Date();
   const calculateTimeLeft = () => {
     const differenceInMillis =
-      new Date(time_end).getTime() - new Date().getTime();
+      (time_end).getTime() - timeNow.getTime();
     if (differenceInMillis <= 0) {
       return {
         days: 0,
@@ -43,19 +43,19 @@ const TimeCountDown: React.FC<IProps> = ({ time_start, time_end }) => {
   }, [time_end]);
 
   return (
-    <div className='flex items-center gap-x-4 ml-8'>
-      {/* <div className='p-2 bg-red-500 rounded-md font-medium text-white'>
+    <div className='flex items-center gap-x-2 ml-8'>
+      <div className='time-countdown'>
         {(timeLeft.days.toString()).padStart(2, '0')}
       </div>
-      <div className='p-2 bg-red-500 rounded-md font-medium text-white'>
+      <div className='time-countdown'>
         {(timeLeft.hours.toString()).padStart(2, '0')}
       </div>
-      <div className='p-2 bg-red-500 rounded-md font-medium text-white'>
+      <div className='time-countdown'>
         {(timeLeft.minutes.toString()).padStart(2, '0')}
       </div>
-      <div className='p-2 bg-red-500 rounded-md font-medium text-white'>
+      <div className='time-countdown'>
         {(timeLeft.seconds.toString()).padStart(2, '0')}
-      </div> */}
+      </div>
     </div>
   )
 };

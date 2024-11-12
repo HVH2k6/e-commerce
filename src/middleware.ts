@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
     },
   });
   const data = await checkData.json();
-  console.log('middleware ~ data:', data);
+
   if (
     (privatePaths.some((path) => pathname.startsWith(path)) &&
       data.name_method == 'User') ||

@@ -8,7 +8,6 @@ import { BellFilled } from '@ant-design/icons';
 
 export default function CheckAuthHeader() {
   const { userInfo, loading } = useAuth();
-  console.log('CheckAuthHeader ~ userInfo:', userInfo);
 
   const covertTextToLowerCase = (text: string) => text.toLowerCase();
   const items: MenuProps['items'] = [

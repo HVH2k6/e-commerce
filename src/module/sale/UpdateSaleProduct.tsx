@@ -7,6 +7,7 @@ import axios from 'axios';
 import { API } from '@/utils/constant';
 import { HandleCreateSale } from '@/action/HandleCreateSale';
 import { HandleUpdateSale } from '@/action/HandleUpdateSale';
+import { useRouter } from 'next/navigation';
 
 type FieldType = {
   title: string;
@@ -20,6 +21,7 @@ const UpdateSaleProduct = ({ id }: { id: number }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const router = useRouter()
 
   useEffect(() => {
     async function fetchData() {
@@ -52,6 +54,7 @@ const UpdateSaleProduct = ({ id }: { id: number }) => {
 
       message.success('Sale updated successfully');
       setOpen(false);
+      router.refresh();
     } catch (error) {
       message.error('Error occurred while updating sale');
     } finally {

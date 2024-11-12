@@ -4,7 +4,7 @@ interface IProduct {
     price: number;
     description: string;
     image: string;
-    sale: string;
+    sale: number;
 }
 
 export default IProduct

@@ -14,19 +14,27 @@ const ProductCard = (props: IProps) => {
       <img
         src={data.image}
         alt=''
-        className='w-full h-60 object-cover object-center rounded-md'
+        className='w-full h-52 object-cover object-center rounded-md mix-blend-multiply'
       />
 
       <div className='p-2'>
         <h3 className='text-xl font-semibold mb-5'>{data.name}</h3>
-        <div className='flex items-center justify-between'>
-          <span className='bg-blue-300/40 text-blue-500 px-2 py-1.5 rounded-md'>
-            Apple
-          </span>
-          <span className='bg-green-300/40 text-green-500 px-2 py-1.5 rounded-md'>
-            Đồng hồ
-          </span>
-        </div>
+        {data.sale && (
+          <div className=''>
+            <span className='font-medium text-red-500 text-xl line-through'>
+              {data.price}$
+            </span>
+            <div className='flex items-center gap-x-2'>
+              <span className='p-1 text-xs rounded-md bg-slate-200 '>
+                {data.sale}%
+              </span>
+              <span className='text-sm'>
+                {Math.floor(Number((data.price * (100 - data.sale)) / 100))}$
+              </span>
+            </div>
+          </div>
+        )}
+        <span className='font-medium'>{data.price}$</span>
 
         <div className='flex items-center justify-between my-5'>
           <div className='flex items-center'>
@@ -35,11 +43,7 @@ const ProductCard = (props: IProps) => {
             <StarIcon></StarIcon>
             <StarIcon></StarIcon>
           </div>
-          <span className='font-medium'>{data.price}$</span>
         </div>
-        <Button type='primary' className='w-full'>
-          Mua ngay
-        </Button>
       </div>
     </div>
   );
