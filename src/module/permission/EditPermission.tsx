@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Modal, Form, Space, Select, Input } from 'antd';
 import axios from 'axios';
-import { API, modulePermission } from '@/utils/constant';
+import { API, listModulePermission } from '@/utils/constant';
 
 interface EditPermissionProps {
   id: string;
@@ -17,23 +17,7 @@ const EditPermission: React.FC<EditPermissionProps> = ({ id }) => {
   const [loading, setLoading] = useState(false);
 
   const [form] = Form.useForm();
-  const listModulePermission = [
-    {
-      name: modulePermission.BLOG,
-    },
-    {
-      name: modulePermission.ROLE,
-    },
-    {
-      name: modulePermission.USER,
-    },
-    {
-      name: modulePermission.AUTH,
-    },
-    {
-      name: modulePermission.PERMISSION,
-    },
-  ];
+ 
   const listMethodPermission = [
     {
       name_method: 'POST',

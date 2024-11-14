@@ -5,6 +5,7 @@ import { Space } from 'antd';
 import Table, { ColumnType } from 'antd/es/table';
 import React from 'react';
 import UpdateSaleProduct from './UpdateSaleProduct';
+import DeleteSale from './DeleteSale';
 interface IProps {
   data: ISale[] | [];
 }
@@ -51,7 +52,7 @@ export default function TableSale(props: IProps) {
       render: (_, record) => (
         <Space size='middle' key={record.id}>
           <UpdateSaleProduct id={record.id}></UpdateSaleProduct>
-          {/* <DeleteProduct id={record.id}></DeleteProduct> */}
+          <DeleteSale id={record.id}></DeleteSale>
         </Space>
       ),
     },

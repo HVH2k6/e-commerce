@@ -19,16 +19,16 @@ const FlashSaleProductList = async () => {
   return (
     <>
       {data.map((product: ISale, index: number) => (
-        <div className='box-content-home-page mt-5' key={index}>
+        <div className='mt-5' key={index}>
           {timeNow >= new Date(product.timeStart).getTime() &&
           timeNow <= new Date(product.timeEnd).getTime() ? (
-            <div>
+            <div className='box-content-home-page'>
               <div className='flex items-center mb-8'>
                 <h2 className='text-3xl font-bold'>{product.titleSale}</h2>
-                {/* <TimeCountDown
+                <TimeCountDown
                   time_start={product.timeStart}
                   time_end={product.timeEnd}
-                ></TimeCountDown> */}
+                ></TimeCountDown>
                 <button className='ml-auto text-blue-500 font-medium'>
                   Xem thêm
                 </button>

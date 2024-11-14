@@ -5,6 +5,7 @@ interface IProduct {
     description: string;
     image: string;
     sale: number;
+    rating:number
 }
 
 export default IProduct

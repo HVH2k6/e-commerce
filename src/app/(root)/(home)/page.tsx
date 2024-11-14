@@ -20,6 +20,9 @@ export default function HomePage() {
             </div>
 
             <FlashSaleProductList></FlashSaleProductList>
+            <div className="mt-5">
+              <NewProductList></NewProductList>
+            </div>
           </div>
         </div>
       </div>

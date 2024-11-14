@@ -21,17 +21,16 @@ interface IProps {
 }
 const ListPermission = (props: IProps) => {
   const { permissions } = props;
-  const { refresh } = useRouter();
   const items: CollapseProps['items'] = Object.keys(permissions).map(
     (module) => ({
       key: module,
       label: <>{module}</>,
       children: (
-        <ul>
+        <ul >
           {permissions[module]?.map((item: Permission) => (
             <li
               key={item._id}
-              className='list-disc list-inside flex items-center justify-between mb-2'
+              className='mb-3 list-disc list-inside flex items-center justify-between'
             >
               <span>
                 {item.name} - {item.apiPath} - {item.method}
@@ -46,13 +45,11 @@ const ListPermission = (props: IProps) => {
     })
   );
 
-  const handleReload = () => {
-    refresh();
-  };
+ 
   return (
     <>
       <button
-        onClick={handleReload}
+        
         className='ml-5 bg-blue-400 p-2 rounded-lg'
       >
         <span className='text-white'>

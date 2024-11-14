@@ -49,10 +49,28 @@ body {
   }
 }
 .box-content-home-page {
-  @apply p-4 rounded-lg bg-white;
+  @apply p-4 rounded-lg bg-white h-max overscroll-y-auto;
 }
 .time-countdown {
   @apply p-2 bg-red-500 rounded-lg font-medium text-white text-sm;
+}
+.product-detail {
+  &-layout{
+
+    @apply grid grid-cols-12 gap-x-5 mt-10
+  }
+  &-info{
+    @apply col-span-9 grid grid-cols-12 gap-x-5
+  }
+  &-payment{
+    @apply col-span-3
+  }
+  &-image{
+    @apply col-span-5
+  }
+  &-overview{
+    @apply col-span-7
+  }
 }
 // responsive
 @media screen and (max-width: 768px) {

@@ -15,6 +15,7 @@ const SideBarCategory = async () => {
   });
 
   const data = await response.json();
+  if (!data) return <p>Loading...</p>;
   return (
     <div className='sidebar-category'>
       <h3 className='font-medium mb-3'>Danh mục</h3>

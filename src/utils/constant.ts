@@ -26,6 +26,7 @@ export const API = {
     ROLE: LOCAL_API + "/role",
     PERMISSION: LOCAL_API + "/permission",
     SALE: LOCAL_API + "/sale",
+    
 };
 export const listModulePermission = [
     {

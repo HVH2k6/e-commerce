@@ -7,10 +7,18 @@ interface IProps {
 }
 
 const TimeCountDown: React.FC<IProps> = ({ time_start, time_end }) => {
-  const timeNow = new Date();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    // Đánh dấu rằng component đã được mount
+    setIsMounted(true);
+  }, []);
+
   const calculateTimeLeft = () => {
-    const differenceInMillis =
-      (time_end).getTime() - timeNow.getTime();
+    const now = new Date().getTime();
+    const endTime = new Date(time_end).getTime();
+    const differenceInMillis = endTime - now;
+
     if (differenceInMillis <= 0) {
       return {
         days: 0,
@@ -39,25 +47,34 @@ const TimeCountDown: React.FC<IProps> = ({ time_start, time_end }) => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
+    // Clear the interval when component unmounts
     return () => clearInterval(timer);
   }, [time_end]);
+
+  // Chỉ render component khi đã được mount
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className='flex items-center gap-x-2 ml-8'>
       <div className='time-countdown'>
-        {(timeLeft.days.toString()).padStart(2, '0')}
+        {String(timeLeft.days).padStart(2, '0')}
       </div>
+      <span>:</span>
       <div className='time-countdown'>
-        {(timeLeft.hours.toString()).padStart(2, '0')}
+        {String(timeLeft.hours).padStart(2, '0')}
       </div>
+      <span>:</span>
       <div className='time-countdown'>
-        {(timeLeft.minutes.toString()).padStart(2, '0')}
+        {String(timeLeft.minutes).padStart(2, '0')}
       </div>
+      <span>:</span>
       <div className='time-countdown'>
-        {(timeLeft.seconds.toString()).padStart(2, '0')}
+        {String(timeLeft.seconds).padStart(2, '0')}
       </div>
     </div>
-  )
+  );
 };
 
 export default TimeCountDown;
