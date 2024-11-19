@@ -1,4 +1,4 @@
-import Checkout from '@/module/product/CartProduct';
+import Checkout from '@/module/product/CheckOutProduct';
 import React from 'react';
 
 const page = () => {

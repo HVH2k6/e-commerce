@@ -6,6 +6,8 @@ import React, { useState } from 'react';
 import StarIcon from '../icon/StarIcon';
 import IProduct from '@/types/product';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
+
 interface IProps {
   data: IProduct;
 }
@@ -34,6 +36,7 @@ const DetailProduct = (props: IProps) => {
   // Xử lý rút gọn mô tả nếu cần
   const MAX_LENGTH = 550;
   const isLongDescription = description.length > MAX_LENGTH;
+  const {addToCart} = useCart();
 
   const shortDescription = isLongDescription
     ? description.slice(0, MAX_LENGTH) + '...'
@@ -44,15 +47,17 @@ const DetailProduct = (props: IProps) => {
         const cartItem = {
           id: data.id,
           name: data.name,
-          image: mainImageUrl,
+          image: data.image,
           color: selectedItem.color,
           size: selectedItem.size,
           quantity: quantityProduct,
           price: selectedItem.price,
-          slug: data.slug
+          slug: data.slug,
         };
         
-        
+        addToCart(cartItem);
+        router.push("/product/checkout")
+
       }else{
         return message.warning("Vui lòng chọn mục cần mua")
       }
