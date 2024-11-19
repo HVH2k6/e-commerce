@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Button, message, Modal, Form, Input } from 'antd';
+import { Button, message, Modal, Form, Input, InputNumber } from 'antd';
 import axios from 'axios';
 
 import type { FormProps } from 'antd';
@@ -10,6 +10,7 @@ import { HandleCreateProduct } from '@/action/HandleCreateProduct';
 import SelectedCategory from '@/components/selected/Selected';
 import UploadMultipleImages from '@/components/file/UploadMultipleImage';
 import TextEditor from '@/components/editor/TextEditor';
+import GroupInput from '@/components/input/GroupInput';
 
 type FieldType = {
   name: string;
@@ -20,6 +21,8 @@ type FieldType = {
   trending?: boolean;
   category?: string;
   list_image?: string[];
+  quantity: number;
+  detail_selected?: { color: string; size: string; price: number }[];
 };
 
 const CreateProduct = () => {
@@ -147,21 +150,7 @@ const CreateProduct = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item<FieldType>
-            label='Nội dung'
-            name='description'
-            rules={[
-              {
-                required: true,
-                message: 'Please input your content!',
-              },
-            ]}
-          >
-            <TextEditor
-              onChange={(value) => form.setFieldsValue({ description: value })}
-              value=''
-            />
-          </Form.Item>
+          
           <Form.Item<FieldType>
             label='Giảm giá sản phẩm'
             name='sale'
@@ -185,7 +174,42 @@ const CreateProduct = () => {
               onChange={(value) => form.setFieldsValue({ category: value })}
             />
           </Form.Item>
-
+          <Form.Item<FieldType>
+            label='Nội dung'
+            name='description'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your content!',
+              },
+            ]}
+          >
+            <TextEditor
+              onChange={(value) => form.setFieldsValue({ description: value })}
+              value=''
+            />
+          </Form.Item>
+          <Form.Item<FieldType>
+            label='Số lượng'
+            name='quantity'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your quantity!',
+              },
+            ]}
+          >
+          <InputNumber />
+          </Form.Item>
+          <Form.Item<FieldType>
+            label="Chi tiết lựa chọn"
+            name="detail_selected"
+          >
+            <GroupInput
+              value={form.getFieldValue('detail_selected') || []}
+              onChange={(value) => form.setFieldsValue({ detail_selected: value })}
+            />
+          </Form.Item>
           <Form.Item<FieldType>
             label='Hình ảnh'
             name='image'

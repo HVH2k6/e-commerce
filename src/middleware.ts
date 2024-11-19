@@ -3,9 +3,17 @@ import type { NextRequest } from 'next/server';
 import { API } from './utils/constant';
 
 const privatePaths = ['/admin'];
+const pathRequireLogin = ['/product/cart', '/product/checkout'];
 export async function middleware(request: NextRequest) {
   const isAuth = Boolean(request.cookies.get('access_token')?.value);
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
+
+
+  if (pathRequireLogin.some((path) => pathname.startsWith(path)) && !isAuth) {
+    const redirectUrl = new URL('/auth/login', request.url);
+    console.log("middleware ~ redirectUrl:", redirectUrl)
+    return NextResponse.redirect(redirectUrl);
+  }
   if (privatePaths.some((path) => pathname.startsWith(path)) && !isAuth) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
@@ -28,5 +36,5 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/product/cart', '/product/checkout'],
 };

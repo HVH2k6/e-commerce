@@ -10,6 +10,8 @@ interface UserInfo {
     fullname: string;
     id: number;
     name_role: string;
+    asserts?: string[];
+    phone?: string;
 }
 
 interface AuthContextType {

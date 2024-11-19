@@ -1,11 +1,14 @@
 'use client';
 
 import { HandleUpdateProduct } from '@/action/HandleUpdateProduct';
+import TextEditor from '@/components/editor/TextEditor';
 import UploadImage from '@/components/file/UploadImage';
+import UploadMultipleImages from '@/components/file/UploadMultipleImage';
+import GroupInput from '@/components/input/GroupInput';
 
 import SelectedCategory from '@/components/selected/Selected';
 import { API } from '@/utils/constant';
-import { Button, Form, FormProps, Input, Modal, message } from 'antd';
+import { Button, Form, FormProps, Input, InputNumber, Modal, message } from 'antd';
 import { useEffect, useState } from 'react';
 
 type FieldType = {
@@ -14,6 +17,9 @@ type FieldType = {
   description: string;
   category?: string;
   image: string;
+  list_image?:string;
+  quantity: number;
+  detail_selected?: { color: string; size: string; price: number }[];
 };
 
 const UpdateProduct = ({ id }: { id: number }) => {
@@ -125,17 +131,33 @@ const UpdateProduct = ({ id }: { id: number }) => {
             <Input />
           </Form.Item>
           <Form.Item<FieldType>
-            label='Mổ tả sản phẩm'
+            label='Số lượng'
+            name='quantity'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your price product!',
+              },
+            ]}
+          >
+          <InputNumber />
+          </Form.Item>
+          <Form.Item<FieldType>
+            label='Nội dung'
             name='description'
             rules={[
               {
                 required: true,
-                message: 'Please input your description product!',
+                message: 'Please input your content!',
               },
             ]}
           >
-            <Input />
+            <TextEditor
+              onChange={(value) => form.setFieldsValue({ description: value })}
+              value=''
+            />
           </Form.Item>
+
           <Form.Item<FieldType>
             label='Chọn nhóm sản phẩm'
             name='category'
@@ -151,10 +173,27 @@ const UpdateProduct = ({ id }: { id: number }) => {
               selectedValue={form.getFieldValue('category')}
             />
           </Form.Item>
+          <Form.Item<FieldType>
+            label="Chi tiết lựa chọn"
+            name="detail_selected"
+          >
+            <GroupInput
+              value={form.getFieldValue('detail_selected') || []}
+              onChange={(value) => form.setFieldsValue({ detail_selected: value })}
+            />
+          </Form.Item>
           <Form.Item<FieldType> label='Hình ảnh' name='image'>
             <UploadImage
               initialImageUrl={form.getFieldValue('image')}
               onUploadSuccess={(url) => form.setFieldsValue({ image: url })}
+            />
+          </Form.Item>
+          <Form.Item<FieldType> label='Danh sách hình ảnh' name='list_image'>
+            <UploadMultipleImages
+              onUploadSuccess={(urls) =>
+                form.setFieldsValue({ list_image: urls })
+              }
+              initialImageUrls={form.getFieldValue('list_image')}
             />
           </Form.Item>
         </Form>

@@ -55,22 +55,37 @@ body {
   @apply p-2 bg-red-500 rounded-lg font-medium text-white text-sm;
 }
 .product-detail {
-  &-layout{
-
-    @apply grid grid-cols-12 gap-x-5 mt-10
+  &-layout {
+    @apply grid grid-cols-12 gap-x-5 mt-10;
   }
-  &-info{
-    @apply col-span-9 grid grid-cols-12 gap-x-5
+  &-info {
+    @apply col-span-9 grid grid-cols-12 gap-x-5;
   }
-  &-payment{
-    @apply col-span-3
+  &-payment {
+    @apply col-span-3;
   }
-  &-image{
-    @apply col-span-5
+  &-image {
+    @apply col-span-5;
+    .custom-image-detail-product {
+      border-radius: 8px !important;
+      object-fit: cover !important;
+    }
   }
-  &-overview{
-    @apply col-span-7
+  &-overview {
+    @apply col-span-7;
   }
+  &-payment {
+    height: max-content;
+  }
+}
+.slide-item{
+  margin-right: 12px !important;
+  &:last-child{
+    margin-right: 0 !important;
+  }
+}
+.box-content-page{
+  @apply p-5 bg-white rounded-lg
 }
 // responsive
 @media screen and (max-width: 768px) {
@@ -98,4 +113,72 @@ body {
   .overlay {
     @apply fixed top-0 bottom-0 right-0 left-0 bg-black/20 z-20;
   }
+}
+.description-product{
+  font-family: "Epilogue", sans-serif;
+  font-size: 16px;
+  h2,
+  h3,
+  h4 {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 32px;
+  }
+  h3 {
+    font-size: 26px;
+  }
+  h4 {
+    font-size: 22px;
+  }
+  p {
+    margin-bottom: 20px;
+    line-height: 2;
+  }
+  figure {
+    margin-bottom: 20px;
+  }
+  figure img {
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  figcaption {
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+    color: #6b6b6b;
+  }
+  ul {
+    list-style-type: disc;
+  }
+  ol {
+    list-style: decimal;
+  }
+  ul,
+  ol {
+    margin-bottom: 20px;
+    padding-left: 40px;
+    margin-left: 0;
+    li {
+      margin-bottom: 10px;
+    }
+  }
+  img {
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  @media screen and (max-width: 1023.98px) {
+    font-size: 14px;
+    h2 {
+      font-size: 26px;
+    }
+    h3 {
+      font-size: 24px;
+    }
+    h4 {
+      font-size: 20px;
+    }
+  }
+
 }

@@ -7,7 +7,7 @@ import { API } from "@/utils/constant";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type FieldType = {
     email?: string;
@@ -17,11 +17,12 @@ type FieldType = {
 const LoginForm: React.FC = () => {
     const router = useRouter();
     const { userInfo, setUserInfo } = useAuth();
+    const searchParams = useSearchParams(); 
+    const redirectTo = searchParams.get("redirect") || "/";
 
-    if (userInfo) {
-        router.push("/");
-        return null;
-    }
+ 
+    
+    
 
     const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
         try {
